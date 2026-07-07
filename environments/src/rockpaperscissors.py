@@ -8,10 +8,49 @@ class RockPaperScissors(EnvTemplate):
         self.round_count = round_count
         self.state = []
 
+    # MDP related Methods
+    def num_states(self) -> int:
+        return 3 ** self.round_count
+
+    def num_actions(self) -> int:
+        return 3
+
+    def num_rewards(self) -> int:
+        return 3
+
+    def reward(self, i: int) -> float:
+        return i - 1
+    
+    def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
+        return NotImplementedError
+
+    # Monte Carlo and TD Methods related functions:
+    def state_id(self) -> int:
+        return self.state
+
     def reset(self):
         self.current_score = 0
         self.state = []
-
+    
+    def display(self):
+        for (i, moves) in enumerate(self.state):
+            print(f"Round {i + 1}:")
+            print(f"    Your Move: {moves[0]}")
+            print(f"    Their Move: {moves[1]}")
+            print(f"    Cumulative Score: {self.current_score}")
+    
+    def is_forbidden(self, action: int) -> int:
+        return NotImplementedError
+    
+    def is_game_over(self) -> bool:
+        return self.round() == self.round_count
+    
+    def available_actions(self) -> np.ndarray:
+        return [0, 1, 2]
+    
+    def action_labels(self):
+        return {0: "Rock", 1: "Paper", 2: "Scissors"}
+    
     def step(self, action: int):
         if action not in self.available_actions():
             raise Exception("Action not allowed in current state")
@@ -27,34 +66,14 @@ class RockPaperScissors(EnvTemplate):
 
         if (action == 0 and opponent_action == 2) or (action == 1 and opponent_action == 0) or (action == 2 and opponent_action == 1):
             self.current_score += 1
-
-    def current_state(self):
-        return self.state
-
+    
     def score(self):
         return self.current_score
-
-    def available_actions(self):
-        return [0, 1, 2]
     
-    def action_labels(self):
-        return {0: "Rock", 1: "Paper", 2: "Scissors"}
+    @staticmethod
+    def from_random_state() -> 'EnvTemplate':
+        return NotImplementedError
     
-    def game_over(self):
-        return self.round() == self.round_count
-    
+    # Environment specific methods
     def round(self):
         return len(self.state)
-    
-    def max_states(self):
-        return 3 ** self.round_count
-    
-    def max_actions(self):
-        return 3
-
-    def pretty_print(self):
-        for (i, moves) in enumerate(self.state):
-            print(f"Round {i + 1}:")
-            print(f"    Your Move: {moves[0]}")
-            print(f"    Their Move: {moves[1]}")
-            print(f"    Cumulative Score: {self.current_score}")
