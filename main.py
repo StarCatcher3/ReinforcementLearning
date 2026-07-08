@@ -7,8 +7,8 @@ import numpy as np
 
 alg = DynamicProgramming()
 #env = SecretEnv0()
-#env = GridWorld()
-env = RockPaperScissors(3)
+env = GridWorld()
+#env = LineWorld()
 
 print(env.num_actions())
 print(env.num_states())
@@ -18,5 +18,5 @@ print(env.num_states())
 pi = np.array([[1, 0, 0]] * 8)
 #pi = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1], [.5, .5, 0], [0, 0, 0]])
 #print(env.is_forbidden(1))
-print(alg.value_iteration(env, pi))
+print(alg.policy_iteration(env))
 
