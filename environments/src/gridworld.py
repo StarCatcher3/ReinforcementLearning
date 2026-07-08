@@ -23,14 +23,36 @@ class GridWorld(EnvTemplate):
         return R[i]
     
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
-        if s + (a * 2 - 1) == s_p:
-            r = self.reward(r_index)
-            if s_p == self.num_cells - 1 and r == 1:
-                1.0
-            elif s_p == 0 and r == -1:
-                1.0
-            elif r == 0:
-                1.0
+        y = s // self.grid_width
+        x = s - y * self.grid_width
+
+        x_last = self.grid_width - 1
+        y_last = self.grid_height - 1
+
+        # Return 0 if in an end state
+        if ((x, y) == (x_last, 0)
+            or (x, y) == (x_last, y_last)):
+            return 0.0
+
+        y_p = s_p // self.grid_width
+        x_p = s_p - y_p * self.grid_width
+
+        r = self.reward(r_index)
+        if ((a == 0 and x > 0 and (x_p, y_p) == (x - 1, y))
+            or (a == 1 and y > 0 and (x_p, y_p) == (x, y - 1))
+            or (a == 2 and x < x_last and (x_p, y_p) == (x + 1, y))
+            or (a == 3 and y < y_last and (x_p, y_p) == (x, y + 1))):
+            
+            if (((x_p, y_p) == (x_last, 0) and r == -3)
+                or ((x_p, y_p) == (x_last, y_last) and r == 1)):
+                return 1.0
+            elif (r == 0):
+                return 1.0
+        if (r == 0 and ((a == 0 and x == 0 and (x_p, y_p) == (0, y))
+            or (a == 1 and y == 0 and (x_p, y_p) == (x, 0))
+            or (a == 2 and x == x_last and (x_p, y_p) == (x_last, y))
+            or (a == 3 and y == y_last and (x_p, y_p) == (x, y_last)))):
+            return 1.0
         return 0.0
 
     # Monte Carlo and TD Methods related functions:
@@ -50,7 +72,7 @@ class GridWorld(EnvTemplate):
             print("|")
     
     def is_forbidden(self, action: int) -> int:
-        return NotImplementedError
+        return False
     
     def is_game_over(self) -> bool:
         return self.pos == (self.grid_width - 1, 0) or self.pos == (self.grid_width - 1, self.grid_height - 1)
@@ -58,7 +80,7 @@ class GridWorld(EnvTemplate):
     def available_actions(self) -> np.ndarray:
         return [0, 1, 2, 3]
     
-    def action_labels(self):
+    def action_desc(self):
         return {0: "Left", 1: "Up", 2: "Right", 3: "Down"}
     
     def step(self, action: int):

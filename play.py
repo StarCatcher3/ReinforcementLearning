@@ -1,13 +1,15 @@
 from environments.src.lineworld import LineWorld
 from environments.src.gridworld import GridWorld
 from environments.src.rockpaperscissors import RockPaperScissors
-from environments.src.secret_envs_wrapper import SecretEnv0Wrapper
 from environments.src.secret_envs_wrapper import SecretEnv0
+from environments.src.secret_envs_wrapper import SecretEnv1
+from environments.src.secret_envs_wrapper import SecretEnv2
+from environments.src.secret_envs_wrapper import SecretEnv3
 
 #env = LineWorld(9)
 #env = GridWorld(7, 3)
-#env = LineWorld.from_random_state(4)
-env = GridWorld.from_random_state(3, 3)
+env = RockPaperScissors(4)
+#env = GridWorld.from_random_state(3, 3)
 
 print("Starting game:")
 env.display()

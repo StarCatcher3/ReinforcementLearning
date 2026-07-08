@@ -24,8 +24,10 @@ class LineWorld(EnvTemplate):
         return i - 1
     
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
+        # Return 0 if in an end state
         if s == 0 or s == self.num_cells - 1:
             return 0.0
+        
         if s + (a * 2 - 1) == s_p:
             r = self.reward(r_index)
             if s_p == self.num_cells - 1 and r == 1:
@@ -52,7 +54,7 @@ class LineWorld(EnvTemplate):
         print("|")
     
     def is_forbidden(self, action: int) -> int:
-        return NotImplementedError
+        return False
     
     def is_game_over(self) -> bool:
         return self.pos == 0 or self.pos == self.num_cells - 1
@@ -60,7 +62,7 @@ class LineWorld(EnvTemplate):
     def available_actions(self) -> np.ndarray:
         return [0, 1]
     
-    def action_labels(self):
+    def action_desc(self):
         return {0: "Left", 1: "Right"}
     
     def step(self, action: int):
