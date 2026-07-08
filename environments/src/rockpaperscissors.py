@@ -33,7 +33,7 @@ class RockPaperScissors(EnvTemplate):
             if round == self.round_count - 1:
                 if (s_p == self.num_states() - 1):
                     return 1.0
-            elif s_p == round * 3 - 2 + a:
+            elif s_p == round * 3 + 1 + a:
                 return 1.0
                 
         return 0.0
