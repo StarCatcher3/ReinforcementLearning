@@ -21,7 +21,7 @@ class LineWorld(EnvTemplate):
         return 3
 
     def reward(self, i: int) -> float:
-        return i - 1
+        return [-1.0, 0.0, 1.0][i]
     
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         # Return 0 if in an end state
@@ -30,10 +30,12 @@ class LineWorld(EnvTemplate):
         
         if s + (a * 2 - 1) == s_p:
             r = self.reward(r_index)
-            if s_p == self.num_cells - 1 and r == 1:
-                return 1.0
-            elif s_p == 0 and r == -1:
-                return 1.0
+            if s_p == self.num_cells - 1:
+                if r == 1:
+                    return 1.0
+            elif s_p == 0:
+                if r == -1:
+                    return 1.0
             elif r == 0:
                 return 1.0
         return 0.0

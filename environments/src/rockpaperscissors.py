@@ -20,7 +20,7 @@ class RockPaperScissors(EnvTemplate):
         return 3
 
     def reward(self, i: int) -> float:
-        return [0, 1, -1][i]
+        return [0.0, 1.0, -1.0][i]
     
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         if s == self.num_states() - 1:

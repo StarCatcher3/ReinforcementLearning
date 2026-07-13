@@ -8,13 +8,15 @@ from environments.src.secret_envs_wrapper import SecretEnv3
 
 #env = LineWorld(9)
 #env = GridWorld(7, 3)
-env = RockPaperScissors(4)
+#env = RockPaperScissors(4)
+env = SecretEnv0()
 #env = GridWorld.from_random_state(3, 3)
 
 print("Starting game:")
 env.display()
 
 while not env.is_game_over():
+    print(f"New game state: {env.state_id()}")
     action = input(f"Choose an action from the following choices: {env.available_actions()}\n")
     try:
         action_id = int(action)

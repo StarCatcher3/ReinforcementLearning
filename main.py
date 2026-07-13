@@ -8,7 +8,7 @@ import time
 
 alg = DynamicProgramming()
 #env = SecretEnv0()
-env = RockPaperScissors()
+env = RockPaperScissors(3)
 #env = GridWorld(10, 10)
 
 #print(env.num_actions())
@@ -25,12 +25,22 @@ env = RockPaperScissors()
 ## Check Execution Time
 """ start_time = time.time()
 alg.policy_iteration(env)
-print(f"Policy Iteration: {time.time() - start_time}")
+print(f"Policy Iteration: {time.time() - start_time}") """
 
-start_time = time.time()
+""" start_time = time.time()
 alg.value_iteration(env)
 print(f"Value Iteration: {time.time() - start_time}") """
 
+start_time = time.time()
+alg.efficient_policy_iteration(env)
+print(f"Efficient Policy Iteration: {time.time() - start_time}")
+
+start_time = time.time()
+alg.efficient_value_iteration(env)
+print(f"Efficient Value Iteration: {time.time() - start_time}")
+
 ## List V*
-print(alg.policy_iteration(env))
-print(alg.value_iteration(env))
+#print(alg.policy_iteration(env))
+#print(alg.value_iteration(env))
+#print(alg.efficient_policy_iteration(env))
+#print(alg.efficient_value_iteration(env))
