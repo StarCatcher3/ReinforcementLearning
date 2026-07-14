@@ -9,7 +9,6 @@ class MonteCarlo():
         return np.random.choice(actions, p=pi_s)
 
     def exploring_starts(self, env: EnvTemplate, iterations: int = 10_000, gamma: float = 0.99999):
-        print(env.state_id())
         S = env.num_states()
         A = env.num_actions()
         Q = np.zeros((S, A))
@@ -61,7 +60,6 @@ class MonteCarlo():
         return pi, Q
     
     def on_policy_first_visit(self, env: EnvTemplate, iterations: int = 10_000, epsilon: float = 0.05, gamma: float = 0.99999):
-        print(env.state_id())
         S = env.num_states()
         A = env.num_actions()
         Q = np.zeros((S, A))
@@ -77,8 +75,7 @@ class MonteCarlo():
 
         i = 0
         while i < iterations:
-            #print("Initializing Random State")
-            env = env.from_random_state()
+            env.reset()
             #print(f"Starting State: {env.state_id()}")
             #print(f"Current Policy: {pi}")
             #print("Starting Loop through all states")
@@ -112,6 +109,51 @@ class MonteCarlo():
                         pi[s_index, :] = epsilon / A
                         pi[s_index, best_a_index] = 1.0 - epsilon + epsilon / A
                     #print(f"First Visit step info: {step}")
+
+            i += 1
+
+        return pi, Q
+    
+    def off_policy(self, env: EnvTemplate, iterations: int = 10_000, gamma: float = 0.99999):
+        S = env.num_states()
+        A = env.num_actions()
+        Q = np.random.rand(S, A)
+        C = np.zeros((S, A))
+        pi = [np.argmax(a) for a in Q]
+        
+        print(f"Initial Policy: {pi}")
+
+        b = np.ones((S, A)) / A
+
+        i = 0
+        while i < iterations:
+            env.reset()
+            #print(f"Starting State: {env.state_id()}")
+            #print(f"Current Policy: {pi}")
+            #print("Starting Loop through all states")
+            episode = []
+            G = 0
+            W = 1
+            while not env.is_game_over():
+                s = env.state_id()
+                #print(f"State: {s}")
+                a = self.choose_action(env.available_actions(), b[s])
+                #print(f"Action: {a}")
+                score = env.score()
+                env.step(a)
+                episode.append({"S": s, "A": a, "R": env.score() - score})
+            
+            #print(f"Episode steps: {episode}")
+            for step in reversed(episode):
+                s = step["S"]
+                a = step["A"]
+                G = gamma * G + step["R"]
+                C[s, a] += W
+                Q[s, a] += (W / C[s, a]) * (G - Q[s, a])
+                pi[s] = np.argmax(Q[s])
+                if a != pi[s]:
+                    break
+                W = W / b[s, a]
 
             i += 1
 
