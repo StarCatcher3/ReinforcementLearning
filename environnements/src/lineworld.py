@@ -11,10 +11,10 @@ class LineWorld(EnvTemplate):
         self.instance = instance
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return self.num_cells
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return 2
 
     def num_rewards(self) -> int:
@@ -39,13 +39,13 @@ class LineWorld(EnvTemplate):
         return 0.0
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return self.pos
 
     def reset(self):
         self.pos = self.num_cells // 2
     
-    def display(self):
+    def pretty_print(self):
         for i in range(self.num_cells):
             if i == self.pos:
                 print("|X", end="")

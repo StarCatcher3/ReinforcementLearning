@@ -4,14 +4,14 @@ import platform
 import numpy as np
 
 if platform.system().lower() == "windows":
-    lib_path = "environments/src/libs/secret_envs.dll"
+    lib_path = "environnements/src/libs/secret_envs.dll"
 elif platform.system().lower() == "linux":
-    lib_path = "environments/src/libs/libsecret_envs.so"
+    lib_path = "environnements/src/libs/libsecret_envs.so"
 elif platform.system().lower() == "darwin":
     if "intel" in platform.processor().lower():
-        lib_path = "environments/src/libs/libsecret_envs_intel_macos.dylib"
+        lib_path = "environnements/src/libs/libsecret_envs_intel_macos.dylib"
     else:
-        lib_path = "environments/src/libs/libsecret_envs.dylib"
+        lib_path = "environnements/src/libs/libsecret_envs.dylib"
 
 
 class SecretEnv0Wrapper:
@@ -99,10 +99,10 @@ class SecretEnv0:
             self.wrapper.lib.secret_env_0_delete(self.instance)
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_0_num_states()
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return self.wrapper.lib.secret_env_0_num_actions()
 
     def num_rewards(self) -> int:
@@ -115,13 +115,13 @@ class SecretEnv0:
         return self.wrapper.lib.secret_env_0_transition_probability(s, a, s_p, r_index)
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return self.wrapper.lib.secret_env_0_state_id(self.instance)
 
     def reset(self):
         self.wrapper.lib.secret_env_0_reset(self.instance)
 
-    def display(self):
+    def pretty_print(self):
         self.wrapper.lib.secret_env_0_display(self.instance)
 
     def is_forbidden(self, action: int) -> int:
@@ -236,10 +236,10 @@ class SecretEnv1:
             self.wrapper.lib.secret_env_1_delete(self.instance)
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_1_num_states()
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return self.wrapper.lib.secret_env_1_num_actions()
 
     def num_rewards(self) -> int:
@@ -252,13 +252,13 @@ class SecretEnv1:
         return self.wrapper.lib.secret_env_1_transition_probability(s, a, s_p, r_index)
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return self.wrapper.lib.secret_env_1_state_id(self.instance)
 
     def reset(self):
         self.wrapper.lib.secret_env_1_reset(self.instance)
 
-    def display(self):
+    def pretty_print(self):
         self.wrapper.lib.secret_env_1_display(self.instance)
 
     def is_forbidden(self, action: int) -> int:
@@ -372,10 +372,10 @@ class SecretEnv2:
             self.wrapper.lib.secret_env_2_delete(self.instance)
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_2_num_states()
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return self.wrapper.lib.secret_env_2_num_actions()
 
     def num_rewards(self) -> int:
@@ -388,13 +388,13 @@ class SecretEnv2:
         return self.wrapper.lib.secret_env_2_transition_probability(s, a, s_p, r_index)
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return self.wrapper.lib.secret_env_2_state_id(self.instance)
 
     def reset(self):
         self.wrapper.lib.secret_env_2_reset(self.instance)
 
-    def display(self):
+    def pretty_print(self):
         self.wrapper.lib.secret_env_2_display(self.instance)
 
     def is_forbidden(self, action: int) -> int:
@@ -509,10 +509,10 @@ class SecretEnv3:
             self.wrapper.lib.secret_env_3_delete(self.instance)
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_3_num_states()
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return self.wrapper.lib.secret_env_3_num_actions()
 
     def num_rewards(self) -> int:
@@ -525,13 +525,13 @@ class SecretEnv3:
         return self.wrapper.lib.secret_env_3_transition_probability(s, a, s_p, r_index)
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return self.wrapper.lib.secret_env_3_state_id(self.instance)
 
     def reset(self):
         self.wrapper.lib.secret_env_3_reset(self.instance)
 
-    def display(self):
+    def pretty_print(self):
         self.wrapper.lib.secret_env_3_display(self.instance)
 
     def is_forbidden(self, action: int) -> int:
@@ -563,8 +563,8 @@ class SecretEnv3:
 
 if __name__ == "__main__":
     env = SecretEnv0()
-    print(env.num_states())
-    print(env.num_actions())
+    print(env.maximum_states_count())
+    print(env.maximum_actions_count())
     print(env.num_rewards())
     for i in range(env.num_rewards()):
         print(env.reward(i))
@@ -573,9 +573,9 @@ if __name__ == "__main__":
     print(env.available_actions())
 
     while not env.is_game_over():
-        env.display()
+        env.pretty_print()
         env.step(env.available_actions()[0])
-    env.display()
+    env.pretty_print()
 
     print(env.score())
 
@@ -583,8 +583,8 @@ if __name__ == "__main__":
     print(random_state_env.available_actions())
 
     env = SecretEnv1()
-    print(env.num_states())
-    print(env.num_actions())
+    print(env.maximum_states_count())
+    print(env.maximum_actions_count())
     print(env.num_rewards())
     for i in range(env.num_rewards()):
         print(env.reward(i))
@@ -593,9 +593,9 @@ if __name__ == "__main__":
     print(env.available_actions())
 
     while not env.is_game_over():
-        env.display()
+        env.pretty_print()
         env.step(env.available_actions()[1])
-    env.display()
+    env.pretty_print()
 
     print(env.score())
 
@@ -603,8 +603,8 @@ if __name__ == "__main__":
     print(random_state_env.available_actions())
 
     env = SecretEnv2()
-    print(env.num_states())
-    print(env.num_actions())
+    print(env.maximum_states_count())
+    print(env.maximum_actions_count())
     print(env.num_rewards())
     for i in range(env.num_rewards()):
         print(env.reward(i))
@@ -613,9 +613,9 @@ if __name__ == "__main__":
     print(env.available_actions())
 
     while not env.is_game_over():
-        env.display()
+        env.pretty_print()
         env.step(env.available_actions()[1])
-    env.display()
+    env.pretty_print()
 
     print(env.score())
 
@@ -623,8 +623,8 @@ if __name__ == "__main__":
     print(random_state_env.available_actions())
 
     env = SecretEnv3()
-    print(env.num_states())
-    print(env.num_actions())
+    print(env.maximum_states_count())
+    print(env.maximum_actions_count())
     print(env.num_rewards())
     for i in range(env.num_rewards()):
         print(env.reward(i))
@@ -633,9 +633,9 @@ if __name__ == "__main__":
     print(env.available_actions())
 
     while not env.is_game_over():
-        env.display()
+        env.pretty_print()
         env.step(env.available_actions()[1])
-    env.display()
+    env.pretty_print()
 
     print(env.score())
 

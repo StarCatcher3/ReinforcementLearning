@@ -1,2 +1,5 @@
-environments/src/__pycache__
-algorithms/src/__pycache__
+environnements/src/__pycache__
+algorithmes/src/__pycache__
+experimentations/__pycache__
+__pycache__
+.venv

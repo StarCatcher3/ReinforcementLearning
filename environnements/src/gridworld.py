@@ -9,10 +9,10 @@ class GridWorld(EnvTemplate):
         self.pos = (0, 0)
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return self.grid_width * self.grid_height
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return 4
 
     def num_rewards(self) -> int:
@@ -56,13 +56,13 @@ class GridWorld(EnvTemplate):
         return 0.0
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return self.pos[0] + self.pos[1] * self.grid_width
 
     def reset(self):
         self.pos = (0, 0)
     
-    def display(self):
+    def pretty_print(self):
         for h in range(self.grid_height):
             for w in range(self.grid_width):
                 if self.pos == (w, h):

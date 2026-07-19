@@ -10,10 +10,10 @@ class RockPaperScissors(EnvTemplate):
         self.history = ()
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return 2 + (self.round_count - 1) * 3
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return 3
 
     def num_rewards(self) -> int:
@@ -23,7 +23,7 @@ class RockPaperScissors(EnvTemplate):
         return [0, 1, -1][i]
     
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
-        if s == self.num_states() - 1:
+        if s == self.maximum_states_count() - 1:
             return 0.0
         if s == 0 and s_p == a + 1:
             return 1 / 3
@@ -31,17 +31,17 @@ class RockPaperScissors(EnvTemplate):
         if s != 0 and (a - last_move) % 3 == r_index:
             round = (s + 2) // 3
             if round == self.round_count - 1:
-                if (s_p == self.num_states() - 1):
+                if (s_p == self.maximum_states_count() - 1):
                     return 1.0
-            elif s_p == round * 3 - 2 + a:
+            elif s_p == round * 3 + 1 + a:
                 return 1.0
                 
         return 0.0
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         if self.current_round == 0: return 0
-        if self.is_game_over(): return self.num_states - 1
+        if self.is_game_over(): return self.maximum_states_count() - 1
         return (self.current_round - 1) * 3 + self.history[0] + 1
     
     def state_desc(self, i: int):
@@ -54,7 +54,7 @@ class RockPaperScissors(EnvTemplate):
         self.current_round = 0
         self.history = ()
     
-    def display(self):
+    def pretty_print(self):
         if self.current_round > 0:
             print(f"Round {self.current_round}:")
             print(f"    Your Move: {self.history[0]}")
@@ -80,7 +80,7 @@ class RockPaperScissors(EnvTemplate):
         if self.is_game_over():
             raise Exception("Game is already over")
         
-        opponent_action = np.random.randint(0, 2) if self.current_round == 0 else self.history[0]
+        opponent_action = np.random.randint(0, 3) if self.current_round == 0 else self.history[0]
         self.history = (action, opponent_action)
 
         # (My action - Opponent action) Mod 3 == Reward_Id

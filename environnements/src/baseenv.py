@@ -4,10 +4,10 @@ import numpy as np
 class EnvTemplate(ABC):
 
     # MDP related Methods
-    def num_states(self) -> int:
+    def maximum_states_count(self) -> int:
         return NotImplementedError
 
-    def num_actions(self) -> int:
+    def maximum_actions_count(self) -> int:
         return NotImplementedError
 
     def num_rewards(self) -> int:
@@ -20,13 +20,13 @@ class EnvTemplate(ABC):
         return NotImplementedError
 
     # Monte Carlo and TD Methods related functions:
-    def state_id(self) -> int:
+    def current_state(self) -> int:
         return NotImplementedError
 
     def reset(self):
         return NotImplementedError
     
-    def display(self):
+    def pretty_print(self):
         return NotImplementedError
     
     def is_forbidden(self, action: int) -> int:
