@@ -4,14 +4,6 @@ import numpy as np
 
 
 class Planning():
-    """Planning / model-based reinforcement learning (Sutton & Barto, chap. 8).
-
-    As for the other model-free files, the immediate reward R is read as the
-    variation of env.score() before/after each env.step(...) call. Dyna-Q
-    additionally learns a deterministic Model(s,a) -> (r, s') from the
-    transitions it experiences, and replays it to perform extra planning
-    updates between real environment steps.
-    """
 
     @staticmethod
     def _reward_of_step(env: EnvTemplate, action: int) -> float:
@@ -34,11 +26,10 @@ class Planning():
 
     def dyna_q(self, env: EnvTemplate, alpha: float = 0.1, epsilon: float = 0.1, gamma: float = 1.0,
                n_planning_steps: int = 10, num_episodes: int = 5000, max_steps: int = 10000) -> dict:
-        """Tabular Dyna-Q (Sutton & Barto, chap. 8), assuming a deterministic environment."""
         Q = defaultdict(float)
-        model = {}  # model[(s, a)] = (r, s_p, available_actions_p)
-        observed_actions_per_state = defaultdict(list)  # s -> list of actions already taken in s
-        observed_states = []  # kept in sync with observed_actions_per_state, incrementally
+        model = {}
+        observed_actions_per_state = defaultdict(list)
+        observed_states = []
 
         for _ in range(num_episodes):
             env.reset()

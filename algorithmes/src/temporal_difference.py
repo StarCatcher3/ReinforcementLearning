@@ -4,12 +4,6 @@ import numpy as np
 
 
 class TemporalDifference():
-    """Model-free Temporal Difference control methods (Sutton & Barto, chap. 6).
-
-    As for Monte Carlo methods, these algorithms never call env.p(...): the
-    immediate reward R is read as the variation of env.score() before/after
-    each env.step(...) call.
-    """
 
     @staticmethod
     def _reward_of_step(env: EnvTemplate, action: int) -> float:
@@ -32,7 +26,6 @@ class TemporalDifference():
 
     def sarsa(self, env: EnvTemplate, alpha: float = 0.1, epsilon: float = 0.1, gamma: float = 1.0,
               num_episodes: int = 5000, max_steps: int = 10000) -> dict:
-        """Sarsa (on-policy TD control), for estimating Q ~= q_* (Sutton & Barto, chap. 6)."""
         Q = defaultdict(float)
 
         for _ in range(num_episodes):
@@ -62,7 +55,6 @@ class TemporalDifference():
 
     def q_learning(self, env: EnvTemplate, alpha: float = 0.1, epsilon: float = 0.1, gamma: float = 1.0,
                    num_episodes: int = 5000, max_steps: int = 10000) -> dict:
-        """Q-learning (off-policy TD control), for estimating pi ~= pi_* (Sutton & Barto, chap. 6)."""
         Q = defaultdict(float)
 
         for _ in range(num_episodes):

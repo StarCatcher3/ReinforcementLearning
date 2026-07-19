@@ -3,7 +3,6 @@ import numpy as np
 
 
 def evaluate_greedy_from_Q(env: EnvTemplate, Q: dict, num_episodes: int = 200, max_steps: int = 1000) -> float:
-    """Average score obtained by acting greedily w.r.t. a learned action-value function Q."""
     total = 0.0
     for _ in range(num_episodes):
         env.reset()
@@ -25,7 +24,6 @@ def evaluate_greedy_from_Q(env: EnvTemplate, Q: dict, num_episodes: int = 200, m
 
 
 def evaluate_deterministic_policy(env: EnvTemplate, pi, num_episodes: int = 200, max_steps: int = 1000) -> float:
-    """Average score obtained by following a deterministic policy pi (array or dict: state -> action)."""
     is_dict = isinstance(pi, dict)
     total = 0.0
     for _ in range(num_episodes):
@@ -48,7 +46,6 @@ def evaluate_deterministic_policy(env: EnvTemplate, pi, num_episodes: int = 200,
 
 
 def evaluate_stochastic_policy(env: EnvTemplate, pi: dict, num_episodes: int = 200, max_steps: int = 1000) -> float:
-    """Average score obtained by following a stochastic policy pi (dict: state -> {action: probability})."""
     total = 0.0
     for _ in range(num_episodes):
         env.reset()

@@ -9,7 +9,6 @@ class RockPaperScissors(EnvTemplate):
         self.round_count = round_count
         self.history = ()
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return 2 + (self.round_count - 1) * 3
 
@@ -38,7 +37,6 @@ class RockPaperScissors(EnvTemplate):
                 
         return 0.0
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         if self.current_round == 0: return 0
         if self.is_game_over(): return self.maximum_states_count() - 1
@@ -83,7 +81,6 @@ class RockPaperScissors(EnvTemplate):
         opponent_action = np.random.randint(0, 3) if self.current_round == 0 else self.history[0]
         self.history = (action, opponent_action)
 
-        # (My action - Opponent action) Mod 3 == Reward_Id
         self.current_score += self.reward((action - opponent_action) % 3)
         
         self.current_round += 1

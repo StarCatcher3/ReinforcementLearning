@@ -12,7 +12,6 @@ EVAL_EPISODES = 2000
 
 results = {}
 
-# Dynamic Programming
 dp = DynamicProgramming()
 
 _, pi_pit = dp.policy_iteration(MontyHallLevel1(), gamma=GAMMA)
@@ -21,7 +20,6 @@ results["Policy Iteration"] = evaluate_deterministic_policy(MontyHallLevel1(), p
 _, pi_vit = dp.value_iteration(MontyHallLevel1(), gamma=GAMMA)
 results["Value Iteration"] = evaluate_deterministic_policy(MontyHallLevel1(), pi_vit, EVAL_EPISODES)
 
-# Monte Carlo
 mc = MonteCarlo()
 
 _, pi_mces = mc.monte_carlo_es(lambda: MontyHallLevel1.from_random_state(), gamma=GAMMA, num_episodes=NUM_EPISODES)
@@ -33,7 +31,6 @@ results["On-policy first-visit MC control"] = evaluate_stochastic_policy(MontyHa
 _, pi_offmc = mc.off_policy_mc_control(MontyHallLevel1(), gamma=GAMMA, num_episodes=NUM_EPISODES)
 results["Off-policy MC control"] = evaluate_deterministic_policy(MontyHallLevel1(), pi_offmc, EVAL_EPISODES)
 
-# Temporal Difference
 td = TemporalDifference()
 
 Q_sarsa = td.sarsa(MontyHallLevel1(), gamma=GAMMA, num_episodes=NUM_EPISODES)
@@ -42,7 +39,6 @@ results["Sarsa"] = evaluate_greedy_from_Q(MontyHallLevel1(), Q_sarsa, EVAL_EPISO
 Q_qlearning = td.q_learning(MontyHallLevel1(), gamma=GAMMA, num_episodes=NUM_EPISODES)
 results["Q-Learning"] = evaluate_greedy_from_Q(MontyHallLevel1(), Q_qlearning, EVAL_EPISODES)
 
-# Planning
 planning = Planning()
 
 Q_dynaq = planning.dyna_q(MontyHallLevel1(), gamma=GAMMA, n_planning_steps=10, num_episodes=NUM_EPISODES)

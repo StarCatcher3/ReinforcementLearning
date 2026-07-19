@@ -5,7 +5,6 @@ import numpy as np
 class DynamicProgramming():
 
     def policy_evaluation(self, env: EnvTemplate, pi: np.array, gamma: float = 0.99999, theta: float = 0.0001) -> np.array:
-        """Iterative Policy Evaluation, for estimating V ~= v_pi (Sutton & Barto, chap. 4)."""
         S = env.maximum_states_count()
         A = env.maximum_actions_count()
         R = env.num_rewards()
@@ -28,7 +27,6 @@ class DynamicProgramming():
         return V
 
     def policy_iteration(self, env: EnvTemplate, gamma: float = 0.99999, theta: float = 0.0001) -> tuple[np.array, np.array]:
-        """Policy Iteration (using iterative policy evaluation), for estimating pi ~= pi_* (Sutton & Barto, chap. 4)."""
         S = env.maximum_states_count()
         A = env.maximum_actions_count()
         R = env.num_rewards()
@@ -36,7 +34,6 @@ class DynamicProgramming():
         pi = np.zeros(S, dtype=int)
 
         while True:
-            # Policy Evaluation
             while True:
                 delta = 0
                 for s in range(S):
@@ -50,7 +47,6 @@ class DynamicProgramming():
                 if delta < theta:
                     break
 
-            # Policy Improvement
             policy_stable = True
             for s in range(S):
                 old_action = pi[s]
@@ -72,7 +68,6 @@ class DynamicProgramming():
                 return V, pi
 
     def value_iteration(self, env: EnvTemplate, gamma: float = 0.99999, theta: float = 0.0001) -> tuple[np.array, np.array]:
-        """Value Iteration, for estimating pi ~= pi_* (Sutton & Barto, chap. 4)."""
         S = env.maximum_states_count()
         A = env.maximum_actions_count()
         R = env.num_rewards()

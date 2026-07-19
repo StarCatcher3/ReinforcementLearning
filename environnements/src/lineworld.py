@@ -10,7 +10,6 @@ class LineWorld(EnvTemplate):
             self.pos = num_cells // 2
         self.instance = instance
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return self.num_cells
 
@@ -24,7 +23,6 @@ class LineWorld(EnvTemplate):
         return i - 1
     
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
-        # Return 0 if in an end state
         if s == 0 or s == self.num_cells - 1:
             return 0.0
         
@@ -38,7 +36,6 @@ class LineWorld(EnvTemplate):
                 return 1.0
         return 0.0
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return self.pos
 

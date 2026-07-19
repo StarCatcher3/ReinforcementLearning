@@ -5,14 +5,6 @@ import numpy as np
 
 
 class MonteCarlo():
-    """Model-free Monte Carlo methods (Sutton & Barto, chap. 5).
-
-    These algorithms never call env.p(...) / env.reward(...): they only observe
-    transitions through env.step(...) and read the immediate reward as the
-    variation of env.score() before/after the step (env.score() is the
-    convention used by every environment of this project to expose the
-    cumulative reward obtained so far).
-    """
 
     @staticmethod
     def _reward_of_step(env: EnvTemplate, action: int) -> float:
@@ -33,13 +25,6 @@ class MonteCarlo():
 
     def monte_carlo_es(self, env_factory: Callable[[], EnvTemplate], gamma: float = 1.0,
                         num_episodes: int = 5000, max_steps: int = 10000) -> tuple[dict, dict]:
-        """Monte Carlo ES (Exploring Starts), for estimating pi ~= pi_* (Sutton & Barto, chap. 5).
-
-        env_factory must return a fresh environment instance placed on a random
-        non-terminal state each time it is called (i.e. Env.from_random_state()),
-        so that every (state, action) pair has a non-zero probability of being
-        the start of an episode, as required by "Exploring Starts".
-        """
         Q = defaultdict(float)
         Q_counts = defaultdict(int)
         pi = {}
@@ -83,10 +68,9 @@ class MonteCarlo():
 
     def on_policy_first_visit_mc_control(self, env: EnvTemplate, epsilon: float = 0.1, gamma: float = 1.0,
                                           num_episodes: int = 5000, max_steps: int = 10000) -> tuple[dict, dict]:
-        """On-policy first-visit MC control (for epsilon-soft policies), estimates pi ~= pi_* (Sutton & Barto, chap. 5)."""
         Q = defaultdict(float)
         Q_counts = defaultdict(int)
-        pi = {}  # pi[s] = {a: probability}
+        pi = {}
 
         def action_probabilities(s, available_actions):
             if s not in pi:
@@ -134,12 +118,6 @@ class MonteCarlo():
 
     def off_policy_mc_control(self, env: EnvTemplate, gamma: float = 1.0,
                                num_episodes: int = 5000, max_steps: int = 10000) -> tuple[dict, dict]:
-        """Off-policy MC control, estimates pi ~= pi_* (Sutton & Barto, chap. 5).
-
-        The behavior policy b is taken to be, for every episode, the uniform
-        random policy over the available actions of each visited state: it is
-        a valid "any soft policy" as required by the algorithm.
-        """
         Q = defaultdict(float)
         C = defaultdict(float)
         pi = {}

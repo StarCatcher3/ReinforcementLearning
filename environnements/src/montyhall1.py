@@ -3,19 +3,6 @@ import numpy as np
 
 
 class MontyHallLevel1(EnvTemplate):
-    """Monty Hall paradox, level 1 (3 doors, 2 successive decisions).
-
-    States (abstracted by symmetry over which literal door is picked, the same
-    convention already used by RockPaperScissors for "last played move"):
-        0 -> no door chosen yet
-        1 -> a door has been chosen, awaiting the stay/switch decision
-        2 -> game over, lost (reward 0.0)
-        3 -> game over, won (reward 1.0)
-
-    Actions:
-        at state 0: 0/1/2 -> choose door A/B/C
-        at state 1: 0 -> stay with the initial choice, 1 -> switch to the other remaining door
-    """
 
     def __init__(self):
         self.winning_door = None
@@ -26,7 +13,6 @@ class MontyHallLevel1(EnvTemplate):
         self.won = None
         self.reset()
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return 4
 
@@ -45,12 +31,12 @@ class MontyHallLevel1(EnvTemplate):
                 return 1.0
             return 0.0
         if s == 1:
-            if a == 0:  # stay: wins iff the initial choice was already the winning door (1/3)
+            if a == 0:
                 if s_p == 3 and r_index == 1:
                     return 1 / 3
                 if s_p == 2 and r_index == 0:
                     return 2 / 3
-            elif a == 1:  # switch: wins iff the initial choice was wrong (2/3)
+            elif a == 1:
                 if s_p == 3 and r_index == 1:
                     return 2 / 3
                 if s_p == 2 and r_index == 0:
@@ -58,7 +44,6 @@ class MontyHallLevel1(EnvTemplate):
             return 0.0
         return 0.0
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         if self.stage == 0:
             return 0

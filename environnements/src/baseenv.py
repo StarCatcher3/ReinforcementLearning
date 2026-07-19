@@ -3,7 +3,6 @@ import numpy as np
 
 class EnvTemplate(ABC):
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return NotImplementedError
 
@@ -19,7 +18,6 @@ class EnvTemplate(ABC):
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         return NotImplementedError
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return NotImplementedError
 

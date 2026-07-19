@@ -14,7 +14,6 @@ EVAL_EPISODES = 500
 
 results = {}
 
-# Dynamic Programming
 dp = DynamicProgramming()
 
 _, pi_pit = dp.policy_iteration(GridWorld(GRID_WIDTH, GRID_HEIGHT), gamma=GAMMA)
@@ -23,7 +22,6 @@ results["Policy Iteration"] = evaluate_deterministic_policy(GridWorld(GRID_WIDTH
 _, pi_vit = dp.value_iteration(GridWorld(GRID_WIDTH, GRID_HEIGHT), gamma=GAMMA)
 results["Value Iteration"] = evaluate_deterministic_policy(GridWorld(GRID_WIDTH, GRID_HEIGHT), pi_vit, EVAL_EPISODES)
 
-# Monte Carlo
 mc = MonteCarlo()
 
 _, pi_mces = mc.monte_carlo_es(lambda: GridWorld.from_random_state(GRID_WIDTH, GRID_HEIGHT), gamma=GAMMA,
@@ -39,7 +37,6 @@ _, pi_offmc = mc.off_policy_mc_control(GridWorld(GRID_WIDTH, GRID_HEIGHT), gamma
 results["Off-policy MC control"] = evaluate_deterministic_policy(GridWorld(GRID_WIDTH, GRID_HEIGHT), pi_offmc,
                                                                   EVAL_EPISODES)
 
-# Temporal Difference
 td = TemporalDifference()
 
 Q_sarsa = td.sarsa(GridWorld(GRID_WIDTH, GRID_HEIGHT), gamma=GAMMA, num_episodes=NUM_EPISODES)
@@ -48,7 +45,6 @@ results["Sarsa"] = evaluate_greedy_from_Q(GridWorld(GRID_WIDTH, GRID_HEIGHT), Q_
 Q_qlearning = td.q_learning(GridWorld(GRID_WIDTH, GRID_HEIGHT), gamma=GAMMA, num_episodes=NUM_EPISODES)
 results["Q-Learning"] = evaluate_greedy_from_Q(GridWorld(GRID_WIDTH, GRID_HEIGHT), Q_qlearning, EVAL_EPISODES)
 
-# Planning
 planning = Planning()
 
 Q_dynaq = planning.dyna_q(GridWorld(GRID_WIDTH, GRID_HEIGHT), gamma=GAMMA, n_planning_steps=20,

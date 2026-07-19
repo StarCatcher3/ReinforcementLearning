@@ -8,7 +8,6 @@ class GridWorld(EnvTemplate):
         self.grid_height = grid_height
         self.pos = (0, 0)
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return self.grid_width * self.grid_height
 
@@ -29,7 +28,6 @@ class GridWorld(EnvTemplate):
         x_last = self.grid_width - 1
         y_last = self.grid_height - 1
 
-        # Return 0 if in an end state
         if ((x, y) == (x_last, 0)
             or (x, y) == (x_last, y_last)):
             return 0.0
@@ -55,7 +53,6 @@ class GridWorld(EnvTemplate):
             return 1.0
         return 0.0
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return self.pos[0] + self.pos[1] * self.grid_width
 
@@ -112,7 +109,6 @@ class GridWorld(EnvTemplate):
         instance = GridWorld(grid_width, grid_height)
         x = np.random.choice(range(0, grid_width))
         y = np.random.choice(range(0, grid_height))
-        # If a terminal state is selected, retry for true random distribution
         while (x, y) == (grid_width - 1, 0) or (x, y) == (grid_width - 1, grid_height - 1):
             x = np.random.choice(range(0, grid_width))
             y = np.random.choice(range(0, grid_height))

@@ -18,7 +18,6 @@ class SecretEnv0Wrapper:
     def __init__(self):
         self.lib = ctypes.cdll.LoadLibrary(lib_path)
 
-        # MDP functions
         self.lib.secret_env_0_num_states.argtypes = []
         self.lib.secret_env_0_num_states.restype = ctypes.c_size_t
 
@@ -35,7 +34,6 @@ class SecretEnv0Wrapper:
                                                                  ctypes.c_size_t]
         self.lib.secret_env_0_transition_probability.restype = ctypes.c_float
 
-        # Monte Carlo and TD Methods
         self.lib.secret_env_0_new.argtypes = []
         self.lib.secret_env_0_new.restype = ctypes.c_void_p
 
@@ -98,7 +96,6 @@ class SecretEnv0:
         if self.wrapper is not None:
             self.wrapper.lib.secret_env_0_delete(self.instance)
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_0_num_states()
 
@@ -114,7 +111,6 @@ class SecretEnv0:
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         return self.wrapper.lib.secret_env_0_transition_probability(s, a, s_p, r_index)
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return self.wrapper.lib.secret_env_0_state_id(self.instance)
 
@@ -155,7 +151,6 @@ class SecretEnv1Wrapper:
     def __init__(self):
         self.lib = ctypes.cdll.LoadLibrary(lib_path)
 
-        # MDP functions
         self.lib.secret_env_1_num_states.argtypes = []
         self.lib.secret_env_1_num_states.restype = ctypes.c_size_t
 
@@ -172,7 +167,6 @@ class SecretEnv1Wrapper:
                                                                  ctypes.c_size_t]
         self.lib.secret_env_1_transition_probability.restype = ctypes.c_float
 
-        # Monte Carlo and TD Methods
         self.lib.secret_env_1_new.argtypes = []
         self.lib.secret_env_1_new.restype = ctypes.c_void_p
 
@@ -235,7 +229,6 @@ class SecretEnv1:
         if self.wrapper is not None:
             self.wrapper.lib.secret_env_1_delete(self.instance)
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_1_num_states()
 
@@ -251,7 +244,6 @@ class SecretEnv1:
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         return self.wrapper.lib.secret_env_1_transition_probability(s, a, s_p, r_index)
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return self.wrapper.lib.secret_env_1_state_id(self.instance)
 
@@ -291,7 +283,6 @@ class SecretEnv2Wrapper:
     def __init__(self):
         self.lib = ctypes.cdll.LoadLibrary(lib_path)
 
-        # MDP functions
         self.lib.secret_env_2_num_states.argtypes = []
         self.lib.secret_env_2_num_states.restype = ctypes.c_size_t
 
@@ -308,7 +299,6 @@ class SecretEnv2Wrapper:
                                                                  ctypes.c_size_t]
         self.lib.secret_env_2_transition_probability.restype = ctypes.c_float
 
-        # Monte Carlo and TD Methods
         self.lib.secret_env_2_new.argtypes = []
         self.lib.secret_env_2_new.restype = ctypes.c_void_p
 
@@ -371,7 +361,6 @@ class SecretEnv2:
         if self.wrapper is not None:
             self.wrapper.lib.secret_env_2_delete(self.instance)
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_2_num_states()
 
@@ -387,7 +376,6 @@ class SecretEnv2:
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         return self.wrapper.lib.secret_env_2_transition_probability(s, a, s_p, r_index)
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return self.wrapper.lib.secret_env_2_state_id(self.instance)
 
@@ -428,7 +416,6 @@ class SecretEnv3Wrapper:
     def __init__(self):
         self.lib = ctypes.cdll.LoadLibrary(lib_path)
 
-        # MDP functions
         self.lib.secret_env_3_num_states.argtypes = []
         self.lib.secret_env_3_num_states.restype = ctypes.c_size_t
 
@@ -445,7 +432,6 @@ class SecretEnv3Wrapper:
                                                                  ctypes.c_size_t]
         self.lib.secret_env_3_transition_probability.restype = ctypes.c_float
 
-        # Monte Carlo and TD Methods
         self.lib.secret_env_3_new.argtypes = []
         self.lib.secret_env_3_new.restype = ctypes.c_void_p
 
@@ -508,7 +494,6 @@ class SecretEnv3:
         if self.wrapper is not None:
             self.wrapper.lib.secret_env_3_delete(self.instance)
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return self.wrapper.lib.secret_env_3_num_states()
 
@@ -524,7 +509,6 @@ class SecretEnv3:
     def p(self, s: int, a: int, s_p: int, r_index: int) -> float:
         return self.wrapper.lib.secret_env_3_transition_probability(s, a, s_p, r_index)
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         return self.wrapper.lib.secret_env_3_state_id(self.instance)
 

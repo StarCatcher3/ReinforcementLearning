@@ -3,38 +3,7 @@ import numpy as np
 
 
 class MontyHallLevel2(EnvTemplate):
-    """Monty Hall paradox, level 2 (5 doors, 4 successive decisions).
 
-    Mechanism (generalizing level 1): the agent first picks 1 of the 5 doors.
-    Then, 3 times in a row: the host removes one non-winning door that is not
-    the agent's current choice, and the agent decides to stay with its current
-    choice or switch to one of the other doors still in play (uniformly at
-    random among them, as they are interchangeable by symmetry). After the
-    3rd elimination only 2 doors remain (current choice + 1 other); the 4th
-    and last decision is applied to those 2 doors and the chosen one is opened.
-
-    States are abstracted (no literal door identity is tracked in current_state(),
-    only the game stage and the stay/switch decisions taken so far, since
-    those are what determine the probability of the current choice being the
-    winning one -- the same symmetry principle already used by
-    RockPaperScissors and MontyHallLevel1):
-        0 -> before the 1st decision (5 doors)
-        1 -> before the 2nd decision (4 doors)
-        2 -> before the 3rd decision, having stayed at the 2nd decision
-        3 -> before the 3rd decision, having switched at the 2nd decision
-        4 -> before the 4th decision, path (stay, stay)
-        5 -> before the 4th decision, path (stay, switch)
-        6 -> before the 4th decision, path (switch, stay)
-        7 -> before the 4th decision, path (switch, switch)
-        8 -> game over, lost (reward 0.0)
-        9 -> game over, won (reward 1.0)
-
-    Actions:
-        at state 0: 0/1/2/3/4 -> choose door A/B/C/D/E
-        at states 1, 2, 3, 4, 5, 6, 7: 0 -> stay, 1 -> switch
-    """
-
-    # (state, action) -> [(next_state, reward_index, probability), ...]
     _TRANSITIONS = {
         (0, 0): [(1, 0, 1.0)],
         (0, 1): [(1, 0, 1.0)],
@@ -68,7 +37,6 @@ class MontyHallLevel2(EnvTemplate):
         self.won = None
         self.reset()
 
-    # MDP related Methods
     def maximum_states_count(self) -> int:
         return 10
 
@@ -87,7 +55,6 @@ class MontyHallLevel2(EnvTemplate):
                 return prob
         return 0.0
 
-    # Monte Carlo and TD Methods related functions:
     def current_state(self) -> int:
         if self.stage == 0:
             return 0

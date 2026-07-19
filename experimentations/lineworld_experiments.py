@@ -13,7 +13,6 @@ EVAL_EPISODES = 500
 
 results = {}
 
-# Dynamic Programming
 dp = DynamicProgramming()
 
 _, pi_pit = dp.policy_iteration(LineWorld(NUM_CELLS), gamma=GAMMA)
@@ -22,7 +21,6 @@ results["Policy Iteration"] = evaluate_deterministic_policy(LineWorld(NUM_CELLS)
 _, pi_vit = dp.value_iteration(LineWorld(NUM_CELLS), gamma=GAMMA)
 results["Value Iteration"] = evaluate_deterministic_policy(LineWorld(NUM_CELLS), pi_vit, EVAL_EPISODES)
 
-# Monte Carlo
 mc = MonteCarlo()
 
 _, pi_mces = mc.monte_carlo_es(lambda: LineWorld.from_random_state(NUM_CELLS), gamma=GAMMA, num_episodes=NUM_EPISODES)
@@ -34,7 +32,6 @@ results["On-policy first-visit MC control"] = evaluate_stochastic_policy(LineWor
 _, pi_offmc = mc.off_policy_mc_control(LineWorld(NUM_CELLS), gamma=GAMMA, num_episodes=NUM_EPISODES)
 results["Off-policy MC control"] = evaluate_deterministic_policy(LineWorld(NUM_CELLS), pi_offmc, EVAL_EPISODES)
 
-# Temporal Difference
 td = TemporalDifference()
 
 Q_sarsa = td.sarsa(LineWorld(NUM_CELLS), gamma=GAMMA, num_episodes=NUM_EPISODES)
@@ -43,7 +40,6 @@ results["Sarsa"] = evaluate_greedy_from_Q(LineWorld(NUM_CELLS), Q_sarsa, EVAL_EP
 Q_qlearning = td.q_learning(LineWorld(NUM_CELLS), gamma=GAMMA, num_episodes=NUM_EPISODES)
 results["Q-Learning"] = evaluate_greedy_from_Q(LineWorld(NUM_CELLS), Q_qlearning, EVAL_EPISODES)
 
-# Planning
 planning = Planning()
 
 Q_dynaq = planning.dyna_q(LineWorld(NUM_CELLS), gamma=GAMMA, n_planning_steps=10, num_episodes=NUM_EPISODES)
