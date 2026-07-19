@@ -46,7 +46,7 @@ class GridWorld(EnvTemplate):
             if (((x_p, y_p) == (x_last, 0) and r == -3)
                 or ((x_p, y_p) == (x_last, y_last) and r == 1)):
                 return 1.0
-            elif (r == 0):
+            elif r == 0 and (x_p, y_p) != (x_last, 0) and (x_p, y_p) != (x_last, y_last):
                 return 1.0
         if (r == 0 and ((a == 0 and x == 0 and (x_p, y_p) == (0, y))
             or (a == 1 and y == 0 and (x_p, y_p) == (x, 0))

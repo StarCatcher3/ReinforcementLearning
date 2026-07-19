@@ -54,14 +54,14 @@ class DynamicProgramming():
             policy_stable = True
             for s in range(S):
                 old_action = pi[s]
-                best_action = 0
+                best_action = None
                 best_value = -np.inf
                 for a in range(A):
                     action_total = 0.0
                     for s_p in range(S):
                         for r_index in range(R):
                             action_total += env.p(s, a, s_p, r_index) * (env.reward(r_index) + gamma * V[s_p])
-                    if action_total > best_value:
+                    if best_action is None or action_total >= best_value:
                         best_value = action_total
                         best_action = a
                 pi[s] = best_action
@@ -96,14 +96,14 @@ class DynamicProgramming():
 
         pi = np.zeros(S, dtype=int)
         for s in range(S):
-            best_action = 0
+            best_action = None
             best_value = -np.inf
             for a in range(A):
                 action_total = 0.0
                 for s_p in range(S):
                     for r_index in range(R):
                         action_total += env.p(s, a, s_p, r_index) * (env.reward(r_index) + gamma * V[s_p])
-                if action_total > best_value:
+                if best_action is None or action_total >= best_value:
                     best_value = action_total
                     best_action = a
             pi[s] = best_action

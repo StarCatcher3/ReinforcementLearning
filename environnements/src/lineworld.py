@@ -34,7 +34,7 @@ class LineWorld(EnvTemplate):
                 return 1.0
             elif s_p == 0 and r == -1:
                 return 1.0
-            elif r == 0:
+            elif r == 0 and s_p != 0 and s_p != self.num_cells - 1:
                 return 1.0
         return 0.0
 
